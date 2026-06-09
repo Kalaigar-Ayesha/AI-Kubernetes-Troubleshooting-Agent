@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-pull-demo
+  namespace: default
+  labels:
+    app: image-pull-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-pull-demo
+  template:
+    metadata:
+      labels:
+        app: image-pull-demo
+    spec:
+      containers:
+      - name: app
+        image: nginx:wrong-tag-xyz123
+        ports:
+        - containerPort: 80

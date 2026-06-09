@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/workspace
+      # Prevent host pycache from polluting the container
+      - /workspace/app/__pycache__
+      # Mount the Docker-compatible Kubeconfig
+      - ./.kube-docker/config:/workspace/.kube/config:ro
+    environment:
+      - KUBECONFIG_PATH=/workspace/.kube/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3000"
+    volumes:
+      - ./frontend:/app
+      # Prevent host node_modules and build output from polluting container mount
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped

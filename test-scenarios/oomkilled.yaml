@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oom-killed-demo
+  namespace: default
+  labels:
+    app: oom-killed-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oom-killed-demo
+  template:
+    metadata:
+      labels:
+        app: oom-killed-demo
+    spec:
+      containers:
+      - name: app
+        image: python:3.9-slim
+        command: ["python", "-c", "import time; print('Allocating memory...'); x = bytearray(50 * 1024 * 1024); time.sleep(100)"]
+        resources:
+          limits:
+            memory: "15Mi"

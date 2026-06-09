@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crash-loop-demo
+  namespace: default
+  labels:
+    app: crash-loop-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crash-loop-demo
+  template:
+    metadata:
+      labels:
+        app: crash-loop-demo
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["sh", "-c", "echo 'Error: Missing critical environment variable DB_PASSWORD!'; sleep 2; exit 1"]
