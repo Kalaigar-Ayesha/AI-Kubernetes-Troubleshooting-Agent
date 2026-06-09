@@ -1,10 +1,10 @@
-# 🛡️ AI Kubernetes Troubleshooting Agent
+#  AI Kubernetes Troubleshooting Agent
 
 An on-demand, intelligent SRE assistant designed to automate cluster diagnostics. It connects to your Kubernetes contexts, collects resource status, analyzes pod failures, retrieves container logs, correlates system events, validates service/endpoint routing, and leverages advanced LLM reasoning (via OpenRouter) to identify the root cause of issues and suggest actionable fixes.
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 The system consists of a Next.js frontend, a FastAPI backend orchestrator, a Kubernetes investigation layer utilizing the `kubectl` CLI, and an InsForge BaaS integration (Postgres DB, Authentication, and Realtime pub/sub).
 
@@ -27,7 +27,7 @@ Here is the high-level architecture diagram of the system:
 
 ---
 
-## 🖥️ Screen Walkthrough
+##  Screen Walkthrough
 
 ### Interactive SRE Dashboard
 From the frontend panel, you can choose configured Kubernetes contexts (e.g. `kind` clusters), initiate deep diagnostic sweeps, monitor live event streams, and read through markdown-formatted root-cause diagnoses.
@@ -45,46 +45,14 @@ The agent tracks each diagnostic step in real-time, storing investigations and p
 
 ---
 
-## 📂 Project Structure
+##  Running the Application
 
-```text
-ai-kubernetes-agent/
-├── backend/                  # FastAPI backend orchestrator
-│   ├── app/
-│   │   ├── api/              # REST controllers / routing
-│   │   ├── core/             # Configuration, logging, database clients
-│   │   ├── kubernetes/       # Kubectl diagnostic modules (Pods, Logs, Events, network, etc.)
-│   │   ├── ai/               # LLM reasoning & prompt templates
-│   │   ├── services/         # Orchestrator orchestration workflow logic
-│   │   └── models/           # Data models & schemas
-│   ├── requirements.txt      # Python dependencies
-│   └── Dockerfile            # Container definition
-├── frontend/                 # React / Next.js user interface
-│   ├── src/
-│   │   ├── app/              # Dashboard pages
-│   │   ├── components/       # UI Components (Auth forms, terminal streams, run history)
-│   │   ├── services/         # API & InsForge client connections
-│   │   └── hooks/            # Custom React Hooks
-│   ├── package.json          # Node dependencies
-│   └── Dockerfile            # Container definition
-├── docs/                     # System documentation
-│   └── images/               # Screenshots and architecture diagrams
-├── test-scenarios/           # Kubernetes manifests for testing failures (OOM, CrashLoop, etc.)
-├── docker-compose.yml        # Local multi-container orchestrator setup
-├── .gitignore                # Global git ignoring configuration
-└── README.md                 # System overview and setup instructions
-```
-
----
-
-## 🚀 Running the Application
-
-### 📋 Prerequisites
+###  Prerequisites
 * [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
 * A running Kubernetes cluster (e.g. [Kind](https://kind.sigs.k8s.io/) or [Minikube](https://minikube.sigs.k8s.io/))
 * A configured `kubeconfig` file (usually located at `~/.kube/config`)
 
-### 🔧 Setup & Configuration
+###  Setup & Configuration
 
 1. **Backend Environment**:
    Copy the example environment file in the `backend` folder and populate it with your OpenRouter API key and InsForge credentials:
@@ -111,7 +79,7 @@ ai-kubernetes-agent/
    ```
    *Make sure your current kubeconfig is active and pointing to the intended context.*
 
-### 🛠️ Spinning Up Services
+###  Spinning Up Services
 
 To build the images and run the full stack in Docker containers:
 
@@ -126,7 +94,7 @@ Once running, you can access the services:
 
 ---
 
-## 🧪 Testing Scenarios
+##  Testing Scenarios
 The `test-scenarios/` directory contains standard Kubernetes configurations with deliberate errors to test the agent's diagnostic logic:
 * `crashloopbackoff.yaml`: Simulates a pod crashing repeatedly on launch.
 * `imagepullbackoff.yaml`: Simulates a pod reference to a non-existent container registry or image.
