@@ -1,4 +1,4 @@
-#  AI Kubernetes Troubleshooting Agent
+# 🛡️ AI Kubernetes Troubleshooting Agent
 
 An on-demand, intelligent SRE assistant designed to automate cluster diagnostics. It connects to your Kubernetes contexts, collects resource status, analyzes pod failures, retrieves container logs, correlates system events, validates service/endpoint routing, and leverages advanced LLM reasoning (via OpenRouter) to identify the root cause of issues and suggest actionable fixes.
 
@@ -45,9 +45,41 @@ The agent tracks each diagnostic step in real-time, storing investigations and p
 
 ---
 
-##  Running the Application
+## 📂 Project Structure
 
-###  Prerequisites
+```text
+ai-kubernetes-agent/
+├── backend/                  # FastAPI backend orchestrator
+│   ├── app/
+│   │   ├── api/              # REST controllers / routing
+│   │   ├── core/             # Configuration, logging, database clients
+│   │   ├── kubernetes/       # Kubectl diagnostic modules (Pods, Logs, Events, network, etc.)
+│   │   ├── ai/               # LLM reasoning & prompt templates
+│   │   ├── services/         # Orchestrator orchestration workflow logic
+│   │   └── models/           # Data models & schemas
+│   ├── requirements.txt      # Python dependencies
+│   └── Dockerfile            # Container definition
+├── frontend/                 # React / Next.js user interface
+│   ├── src/
+│   │   ├── app/              # Dashboard pages
+│   │   ├── components/       # UI Components (Auth forms, terminal streams, run history)
+│   │   ├── services/         # API & InsForge client connections
+│   │   └── hooks/            # Custom React Hooks
+│   ├── package.json          # Node dependencies
+│   └── Dockerfile            # Container definition
+├── docs/                     # System documentation
+│   └── images/               # Screenshots and architecture diagrams
+├── test-scenarios/           # Kubernetes manifests for testing failures (OOM, CrashLoop, etc.)
+├── docker-compose.yml        # Local multi-container orchestrator setup
+├── .gitignore                # Global git ignoring configuration
+└── README.md                 # System overview and setup instructions
+```
+
+---
+
+## 🚀 Running the Application
+
+### 📋 Prerequisites
 * [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
 * A running Kubernetes cluster (e.g. [Kind](https://kind.sigs.k8s.io/) or [Minikube](https://minikube.sigs.k8s.io/))
 * A configured `kubeconfig` file (usually located at `~/.kube/config`)
